@@ -1,2 +1,3 @@
 #!/bin/sh
-# TODO
+
+docker network rm chinook-net || true
