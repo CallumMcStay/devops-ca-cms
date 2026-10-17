@@ -7,4 +7,4 @@
 __pycache__
 *.pyc
 CLAUDE.md
-.DS_S*
+.DS_S*secret.ollama-api-key
