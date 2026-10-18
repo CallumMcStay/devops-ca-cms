@@ -1,5 +1,5 @@
 cockroachdb:
-  host: callum
+  host: chinook-db
   port: 5432
   database: chinook
   username: callumsca
