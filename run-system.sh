@@ -15,3 +15,9 @@ until docker exec chinook-db pg_isready -h localhost -U callumsca -d assignment 
 done
 
 docker build --target seeder -t chinook-seeder .
+
+docker run --rm --name chinook-seeder --net chinook-net \
+    -v /Users/callummcstay/DevOps/devops-2026-docker-assignment/Chinook.db:/app/Chinook.db:ro \
+    -e SQLITE_FILE=/app/Chinook.db \
+    -e DATABASE_URL=postgresql://callumsca:postgres@chinook-db:5432/assignment \
+    chinook-seeder:latest
