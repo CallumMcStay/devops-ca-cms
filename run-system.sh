@@ -9,3 +9,7 @@ docker run -d --net chinook-net --name chinook-db \
         -e POSTGRES_PASSWORD=postgres \
         -e POSTGRES_DB=assignment \
     postgres:16
+
+until docker exec chinook-db pg_isready -h localhost -U callumsca -d assignment >/dev/null 2>&1; do
+  sleep 1
+done
