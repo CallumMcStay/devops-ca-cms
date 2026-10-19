@@ -21,3 +21,15 @@ docker run --rm --name chinook-seeder --net chinook-net \
     -e SQLITE_FILE=/app/Chinook.db \
     -e DATABASE_URL=postgresql://callumsca:postgres@chinook-db:5432/assignment \
     chinook-seeder:latest
+
+docker run -d --name chinook-gateway --net chinook-net \
+    -v /var/run/docker.sock:/var/run/docker.sock \
+    -v /Users/callummcstay/DevOps/devops-2026-docker-assignment/mcp_config.yaml:/mcp_config.yaml:ro \
+    -v /Users/callummcstay/DevOps/devops-2026-docker-assignment/mcp_secret.env:/run/secrets/database-url:ro \
+    docker/mcp-gateway:latest \
+    --transport=sse \
+    --secrets=/run/secrets/database-url \
+    --allow-unauthenticated \
+    --servers=cockroachdb \
+    --tools=execute_query \
+    --config=/mcp_config.yaml
