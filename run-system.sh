@@ -33,3 +33,7 @@ docker run -d --name chinook-gateway --net chinook-net \
     --servers=cockroachdb \
     --tools=execute_query \
     --config=/mcp_config.yaml
+
+sleep 60
+
+docker build --target agent -t chinook-agent .
