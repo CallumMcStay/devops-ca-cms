@@ -3,11 +3,15 @@
 #Safety to stop the script if any command fails
 set -e
 
+#Create a docker volume to allow me to remove it in cleanup.sh
+docker volume create chinook-volume
+
 #Create a Docker network for the containers to communicate
 docker network create chinook-net
 
 #Start the PostgreSQL database container, using -d to run it in detached mode
 docker run -d --net chinook-net --name chinook-db \
+        -v chinook-volume:/var/lib/postgresql/data \
         -e POSTGRES_USER=callumsca \
         -e POSTGRES_PASSWORD=postgres \
         -e POSTGRES_DB=assignment \
