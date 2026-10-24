@@ -7,7 +7,7 @@ set -e
 docker volume create chinook-volume
 
 #Create a Docker network for the containers to communicate
-docker network create chinook-net
+docker network create --label "project=chinook" chinook-net
 
 #Start the PostgreSQL database container, using -d to run it in detached mode
 docker run -d --label "project=chinook" --net chinook-net --name chinook-db \
