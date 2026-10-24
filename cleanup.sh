@@ -1,9 +1,6 @@
 #!/bin/sh
 
-docker rm -f chinook-agent || true
-docker rm -f chinook-seeder || true
-docker rm -f chinook-gateway || true
-docker rm -f chinook-db || true
+docker ps -a --filter "label=project=chinook" -q | xargs -r docker rm -f || true
 docker volume rm chinook-volume || true
 docker network rm chinook-net || true
 docker rmi chinook-seeder:latest || true
