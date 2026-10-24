@@ -45,8 +45,10 @@ docker run -d --label "project=chinook" --name chinook-gateway --net chinook-net
     --tools=execute_query \
     --config=/mcp_config.yaml
 
-#Waits 60 seconds to allow the gateway to start up and be ready
-sleep 60
+#Uses docker logs to check logs and grep -q to search the string "Start sse server" and waits until it is found before going to the next step. 
+until docker logs chinook-gateway 2>&1 | grep -q "Start sse server"; do
+    sleep 1
+done
 
 #Build the agent image
 docker build --label "project=chinook" --target agent -t chinook-agent .
