@@ -1,5 +1,6 @@
 #!/bin/sh
 
+docker rm -f chinook-agent || true
 docker rm -f chinook-seeder || true
 docker rm -f chinook-gateway || true
 docker rm -f chinook-db || true
