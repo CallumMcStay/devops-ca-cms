@@ -3,7 +3,7 @@
 #Safety to stop the script if any command fails
 set -e
 
-#Create a docker volume to allow me to remove it in cleanup.sh
+#Create a docker volume to allow it to be removed in cleanup.sh
 docker volume create chinook-volume
 
 #Create a Docker network for the containers to communicate
