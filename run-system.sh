@@ -9,6 +9,8 @@ docker volume create --label "project=chinook" chinook-volume
 #Create a Docker network for the containers to communicate
 docker network create --label "project=chinook" chinook-net
 
+echo "Network and volume created. Proceeding to start the PostgreSQL database container."
+
 #Start the PostgreSQL database container, using -d to run it in detached mode
 docker run -d --label "project=chinook" --net chinook-net --name chinook-db \
         -v chinook-volume:/var/lib/postgresql/data \
@@ -22,6 +24,8 @@ until docker exec chinook-db pg_isready -h localhost -U callumsca -d assignment 
   sleep 1
 done
 
+echo "Database is ready. Proceeding to seed the database."
+
 # Build the seeder image
 docker build --label "project=chinook" --target seeder -t chinook-seeder .
 
@@ -31,6 +35,8 @@ docker run --rm --label "project=chinook" --name chinook-seeder --net chinook-ne
     -e SQLITE_FILE=/app/Chinook.db \
     -e DATABASE_URL=postgresql://callumsca:postgres@chinook-db:5432/assignment \
     chinook-seeder:latest
+
+echo "Database seeding completed. Proceeding to run the MCP Gateway and Agent."
 
 #Lets the agent talk to the DB through the gateway using MCP.
 docker run -d --label "project=chinook" --name chinook-gateway --net chinook-net \
@@ -49,6 +55,8 @@ docker run -d --label "project=chinook" --name chinook-gateway --net chinook-net
 until docker logs chinook-gateway 2>&1 | grep -q "Start sse server"; do
     sleep 1
 done
+
+echo "MCP Gateway is ready. Proceeding to build and run the Agent."
 
 #Build the agent image
 docker build --label "project=chinook" --target agent -t chinook-agent .
