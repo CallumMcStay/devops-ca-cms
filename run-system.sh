@@ -4,7 +4,7 @@
 set -e
 
 #Create a docker volume to allow it to be removed in cleanup.sh
-docker volume create chinook-volume
+docker volume create --label "project=chinook" chinook-volume
 
 #Create a Docker network for the containers to communicate
 docker network create --label "project=chinook" chinook-net
