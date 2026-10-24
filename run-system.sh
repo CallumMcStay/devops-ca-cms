@@ -23,7 +23,7 @@ until docker exec chinook-db pg_isready -h localhost -U callumsca -d assignment 
 done
 
 # Build the seeder image
-docker build --target seeder -t chinook-seeder .
+docker build --label "project=chinook" --target seeder -t chinook-seeder .
 
 # Run the seeder container to populate the database
 docker run --rm --label "project=chinook" --name chinook-seeder --net chinook-net \
@@ -49,7 +49,7 @@ docker run -d --label "project=chinook" --name chinook-gateway --net chinook-net
 sleep 60
 
 #Build the agent image
-docker build --target agent -t chinook-agent .
+docker build --label "project=chinook" --target agent -t chinook-agent .
 
 #Run the agent container with the question its asking the Database. No -d so the info is printed to the console.
 docker run --rm --label "project=chinook" --name chinook-agent --net chinook-net \
